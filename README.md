@@ -325,6 +325,24 @@ Nomor WhatsApp CS diatur di `src/lib/format.ts` → `waLink("6281234567890", …
 
 ---
 
+
+---
+
+## 🧠 PetKu Pintar — 5 Fitur yang Tidak Ada di Toko Lain
+
+| # | Fitur | Cara Kerja |
+|---|-------|-----------|
+| 1 | **🐶 Dr. Pipo — Asisten Gizi AI** | Maskot corgi melayang di sudut layar. Klik → chat AI yang membaca katalog live (35 produk) dan merekomendasikan makanan sesuai jenis, umur, bobot & budget anabulmu. Hasil rekomendasi muncul sebagai kartu produk yang bisa langsung dibuka. Punya fallback rule-based bila AI tumbang — tidak pernah mati. |
+| 2 | **🧮 Kalkulator Porsi + Harga-per-Hari** | Di setiap detail produk: atur jenis hewan, dewasa/anak, dan bobot → dapat porsi gram/hari, durasi kemasan habis, dan **biaya per hari** (mis. Whiskas 7 kg = Rp2.716/hari — mahal terasa jadi murah). Norma gizi: anjing 20 g/kg, kucing 15 g/kg, anak ×1,6. |
+| 3 | **🗂️ Pantry Anabul** | Catat kemasan yang sedang dibuka dari kalkulator → ring countdown SVG beranimasi menghitung sisa hari otomatis. ≤7 hari: kartu berdenyut amber + alarm muncul di beranda. Tombol **Beli Lagi** sekali klik langsung masuk keranjang. Retensi pelanggan jalan sendiri. |
+| 4 | **🐖 Mode Hemat** | Tulis anggaran + profil anabul → algoritma greedy *gram-per-rupiah* menyusun kombinasi kemasan (hormati stok, hitung ongkir) dengan **hari makan maksimal**, lalu membandingkannya dengan pilihan paling boros: "Mode Hemat dapat 12,1× lebih lama!". |
+| 5 | **🎭 Maskot Reaktif** | Pipo bereaksi pada setiap aksi: senang saat tambah keranjang, lompat gembira saat checkout sukses, menggumulkan saran tiap 26 detik. Semua lewat `CustomEvent("petku:pipo")` — komponen tidak saling kenal, arsitektur tetap bersih. |
+
+**File baru:** `src/lib/petku-smart.ts` (mesin gizi & optimizer) · `src/lib/pantry-store.ts` (Zustand persist) · `src/app/api/ai/advisor/route.ts` (z-ai-web-dev-sdk, katalog live, fallback) · `src/components/petku/{mascot,ai-advisor,feeding-calculator,pantry,smart-budget,smart-hub}.tsx`
+
+**Navigasi:** tab baru **Pantry** & **Mode Hemat** di header desktop + tab bawah mobile (6 tab).
+
+
 <div align="center">
 
 **PetKu** — Dibuat dengan 🧡 untuk para *pawrents* Indonesia.

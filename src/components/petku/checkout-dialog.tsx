@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-store";
+import { pipoReact } from "./mascot";
 import { toast } from "sonner";
 import { formatRupiah, waLink } from "@/lib/format";
 import { FREE_SHIPPING_MIN, SHIPPING_COST, PAYMENT_LABELS } from "@/lib/petku-types";
@@ -82,6 +83,7 @@ export function CheckoutDialog({
       setSuccessOrder(data.order);
       clear();
       toast.success("🎉 Pesanan berhasil dibuat!");
+      pipoReact("celebrate", `Pesanan jalan! Guk guk, terima kasih 🎉`);
     } catch {
       toast.error("Terjadi kesalahan jaringan. Coba lagi.");
     } finally {

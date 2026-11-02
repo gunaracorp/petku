@@ -1,6 +1,7 @@
 "use client";
 
-import { PawPrint, Search, ShoppingCart } from "lucide-react";
+import { PiggyBank, PawPrint, Search, ShoppingCart } from "lucide-react";
+import { Boxes } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/lib/cart-store";
@@ -25,8 +26,10 @@ export function Header({
 
   const count = mounted ? items.reduce((s, i) => s + i.quantity, 0) : 0;
 
-  const navItems: { key: View; label: string }[] = [
+  const navItems: { key: View; label: string; icon?: typeof PawPrint }[] = [
     { key: "home", label: "Beranda" },
+    { key: "pantry", label: "Pantry", icon: Boxes },
+    { key: "budget", label: "Mode Hemat", icon: PiggyBank },
     { key: "orders", label: "Pesanan Saya" },
     { key: "admin", label: "Admin" },
   ];
@@ -81,6 +84,7 @@ export function Header({
                 view === n.key ? "bg-orange-100 text-orange-700 hover:bg-orange-100" : "text-muted-foreground hover:text-orange-600"
               )}
             >
+              {n.icon && <n.icon className="size-4" />}
               {n.label}
             </Button>
           ))}

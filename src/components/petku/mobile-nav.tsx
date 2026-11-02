@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Package, Settings, ShoppingCart, Store } from "lucide-react";
+import { Boxes, Home, Package, Settings, ShoppingCart, Store } from "lucide-react";
 import { useCart } from "@/lib/cart-store";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
@@ -23,6 +23,7 @@ export function MobileNav({
   const navs = [
     { key: "home" as View, label: "Beranda", icon: Home, action: () => onViewChange("home") },
     { key: "shop" as const, label: "Belanja", icon: Store, action: onShop },
+    { key: "pantry" as View, label: "Pantry", icon: Boxes, action: () => onViewChange("pantry") },
     { key: "cart" as const, label: "Keranjang", icon: ShoppingCart, action: openCart, badge: count },
     { key: "orders" as View, label: "Pesanan", icon: Package, action: () => onViewChange("orders") },
     { key: "admin" as View, label: "Admin", icon: Settings, action: () => onViewChange("admin") },
@@ -33,7 +34,7 @@ export function MobileNav({
       aria-label="Navigasi bawah"
       className="fixed inset-x-0 bottom-0 z-40 border-t border-orange-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-6">
         {navs.map((n) => {
           const active = n.key === view;
           return (
@@ -41,7 +42,7 @@ export function MobileNav({
               key={n.key}
               onClick={n.action}
               className={cn(
-                "relative flex min-h-14 flex-col items-center justify-center gap-0.5 py-1.5 text-[10px] font-bold transition-colors active:scale-95",
+                "relative flex min-h-14 flex-col items-center justify-center gap-0.5 py-1.5 text-[9px] font-bold transition-colors active:scale-95",
                 active ? "text-orange-600" : "text-muted-foreground"
               )}
               aria-label={n.label}

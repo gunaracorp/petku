@@ -1,1 +1,1 @@
-export type View = "home" | "orders" | "admin";
+export type View = "home" | "orders" | "admin" | "pantry" | "budget";

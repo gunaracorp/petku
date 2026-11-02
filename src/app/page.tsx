@@ -13,6 +13,11 @@ import { OrderTracking } from "@/components/petku/order-tracking";
 import { AdminPanel } from "@/components/petku/admin-panel";
 import { Footer } from "@/components/petku/footer";
 import { MobileNav } from "@/components/petku/mobile-nav";
+import { SmartZone } from "@/components/petku/smart-hub";
+import { Pantry } from "@/components/petku/pantry";
+import { SmartBudget } from "@/components/petku/smart-budget";
+import { PipoMascot } from "@/components/petku/mascot";
+import { AiAdvisor } from "@/components/petku/ai-advisor";
 import { useCart } from "@/lib/cart-store";
 import type { CategoryData, ProductData } from "@/lib/petku-types";
 import type { View } from "@/components/petku/view-types";
@@ -33,6 +38,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<ProductData | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [advisorOpen, setAdvisorOpen] = useState(false);
 
   // loading = true selama filter aktif belum selesai dimuat
   const loadingProducts = loadedKey !== filterKey;
@@ -107,14 +113,18 @@ export default function Home() {
     setCheckoutOpen(true);
   }, []);
 
+  const goView = useCallback((v: View) => {
+    setView(v);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  const openAdvisor = useCallback(() => setAdvisorOpen(true), []);
+
   return (
     <div className="flex min-h-screen flex-col bg-[#fffaf3]">
       <Header
         view={view}
-        onViewChange={(v) => {
-          setView(v);
-          if (v === "home") window.scrollTo({ top: 0, behavior: "smooth" });
-        }}
+        onViewChange={goView}
         searchValue={searchInput}
         onSearchChange={setSearchInput}
       />
@@ -131,6 +141,7 @@ export default function Home() {
                 scrollToCatalog();
               }}
             />
+            <SmartZone onAsk={openAdvisor} onPantry={() => goView("pantry")} onBudget={() => goView("budget")} />
             <FeaturedSection
               products={featured}
               loading={loadingFeatured}
@@ -154,16 +165,24 @@ export default function Home() {
 
         {view === "orders" && <OrderTracking />}
         {view === "admin" && <AdminPanel />}
+        {view === "pantry" && <Pantry />}
+        {view === "budget" && (
+          <SmartBudget products={products} categories={categories} loading={loadingProducts} />
+        )}
       </main>
 
       <Footer />
       <MobileNav
         view={view}
-        onViewChange={(v) => {
-          setView(v);
-          if (v === "home") window.scrollTo({ top: 0, behavior: "smooth" });
-        }}
+        onViewChange={goView}
         onShop={scrollToCatalog}
+      />
+
+      <PipoMascot onAsk={openAdvisor} chatOpen={advisorOpen} />
+      <AiAdvisor
+        open={advisorOpen}
+        onOpenChange={setAdvisorOpen}
+        onOpenProduct={openProduct}
       />
 
       <ProductDetailDialog
@@ -177,8 +196,7 @@ export default function Home() {
         open={checkoutOpen}
         onOpenChange={setCheckoutOpen}
         onSuccess={() => {
-          setView("orders");
-          window.scrollTo({ top: 0 });
+          goView("orders");
         }}
       />
     </div>

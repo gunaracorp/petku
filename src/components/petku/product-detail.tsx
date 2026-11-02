@@ -15,6 +15,8 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-store";
 import { toast } from "sonner";
 import { discountPercent, formatRupiah } from "@/lib/format";
+import { FeedingCalculator } from "./feeding-calculator";
+import { pipoReact } from "./mascot";
 import { ProductVisual, Stars } from "./visual";
 import type { ProductData } from "@/lib/petku-types";
 
@@ -59,6 +61,12 @@ export function ProductDetailDialog({
       qty
     );
     toast.success(`${product.emoji} ${qty}× ${product.name} masuk keranjang`);
+    pipoReact(
+      qty >= 3 ? "celebrate" : "happy",
+      qty >= 3
+        ? `Wih, ${qty} pak sekaligus! Stok aman berbulan-bulan 🤩`
+        : "Nyam! Udah aman di keranjang 🦴"
+    );
     onOpenChange(false);
   }
 
@@ -137,6 +145,9 @@ export function ProductDetailDialog({
               🚚 Gratis ongkir bila subtotal ≥ Rp200.000
             </p>
           </div>
+
+          {/* 🧠 Fitur pintar: kalkulator porsi + catat pantry */}
+          <FeedingCalculator product={product} />
 
           {/* Qty stepper */}
           <div className="flex items-center justify-between gap-3">
